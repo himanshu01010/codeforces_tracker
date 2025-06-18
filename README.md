@@ -68,16 +68,16 @@ A full-stack application to manage and monitor Codeforces profiles for students.
 - MongoDB
 - npm or yarn
 
-### Backend Setup
+### Backend and fontend Setup
 
 ```bash
 cd backend
 npm install
 npm start
 
-```bash
 cd frontend
 npm install
 npm run dev
+
 
 
