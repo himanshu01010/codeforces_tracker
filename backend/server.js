@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:3000",   // your React dev server
-  "https://codeforces-tracker-frontend.vercel.app"
+  "https://codeforces-tracker-frontend-gedick3bj-himanshu01010s-projects.vercel.app"
 ];
 
 app.use(cors({
