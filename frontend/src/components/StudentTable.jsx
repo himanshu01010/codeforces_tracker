@@ -76,11 +76,12 @@ const StudentTable = () => {
     setModalOpen(true)
   }
 
+  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const handleDeleteStudent = async (id) => {
     if (!window.confirm('Are you sure you want to delete this student?')) return
 
     try {
-      await axios.delete(`/api/students/${id}`)
+      await axios.delete(`${API_BASE}/api/students/${id}`)
       toast.success('Student deleted successfully')
       
      
@@ -97,7 +98,7 @@ const StudentTable = () => {
   const handleSyncAll = async () => {
     setSyncing(true)
     try {
-      await axios.post('/api/sync/all')
+      await axios.post(`${API_BASE}/api/sync/all`)
       toast.success('All student data synced successfully')
       fetchStudents()
     } catch (error) {
@@ -109,7 +110,7 @@ const StudentTable = () => {
 
   const handleSyncStudent = async (id) => {
     try {
-      await axios.post(`/api/sync/student/${id}`)
+      await axios.post(`${API_BASE}/api/sync/student/${id}`)
       toast.success('Student data synced successfully')
       fetchStudents()
     } catch (error) {
@@ -119,7 +120,7 @@ const StudentTable = () => {
 
   const handleDownloadCSV = async () => {
     try {
-      const response = await axios.get('/api/students/download/csv', {
+      const response = await axios.get(`${API_BASE}/api/students/download/csv`, {
         responseType: 'blob'
       })
       
@@ -140,7 +141,7 @@ const StudentTable = () => {
 
   const handleToggleEmail = async (student) => {
     try {
-      await axios.put(`/api/students/${student._id}`, {
+      await axios.put(`${API_BASE}/api/students/${student._id}`, {
         ...student,
         emailEnabled: !student.emailEnabled
       })
@@ -245,8 +246,6 @@ const StudentTable = () => {
         onSortChange={handleSortChange}
         totalResults={totalStudents}
       />
-
-      {/* Table */}
       <div className="card overflow-hidden">
         {loading && (
           <div className="absolute inset-0 bg-white/50 dark:bg-gray-800/50 z-10 flex items-center justify-center">

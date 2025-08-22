@@ -13,6 +13,8 @@ const StudentModal = ({ student, onClose, onSave }) => {
   })
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
+  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
   useEffect(() => {
     if (student) {
@@ -62,10 +64,10 @@ const StudentModal = ({ student, onClose, onSave }) => {
     
     try {
       if (student) {
-        await axios.put(`/api/students/${student._id}`, formData)
+        await axios.put(`${API_BASE}/api/students/${student._id}`, formData)
         toast.success('Student updated successfully')
       } else {
-        await axios.post('/api/students', formData)
+        await axios.post(`${API_BASE}/api/students`, formData)
         toast.success('Student created successfully')
       }
       

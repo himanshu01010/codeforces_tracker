@@ -11,6 +11,8 @@ const Settings = () => {
   })
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
   useEffect(() => {
     fetchSettings()
@@ -18,7 +20,7 @@ const Settings = () => {
 
   const fetchSettings = async () => {
     try {
-      const response = await axios.get('/api/settings')
+      const response = await axios.get(`${API_BASE}/api/settings`)
       setSettings(response.data)
     } catch (error) {
       toast.error('Failed to fetch settings')
@@ -30,7 +32,7 @@ const Settings = () => {
   const handleSave = async () => {
     setSaving(true)
     try {
-      await axios.put('/api/settings', settings)
+      await axios.put(`${API_BASE}/api/settings`, settings)
       toast.success('Settings saved successfully')
     } catch (error) {
       toast.error('Failed to save settings')

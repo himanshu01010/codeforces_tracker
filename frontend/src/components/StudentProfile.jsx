@@ -16,6 +16,8 @@ const StudentProfile = () => {
   const [activeTab, setActiveTab] = useState('contests')
   const [contestPeriod, setContestPeriod] = useState(365)
   const [statsPeriod, setStatsPeriod] = useState(90)
+  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
 
   useEffect(() => {
     fetchStudentProfile()
@@ -29,7 +31,7 @@ const StudentProfile = () => {
 
   const fetchStudentProfile = async () => {
     try {
-      const response = await axios.get(`/api/students/${id}/profile?period=${contestPeriod}`)
+      const response = await axios.get(`${API_BASE}/api/students/${id}/profile?period=${contestPeriod}`)
       setStudent(response.data.student)
       setContests(response.data.contests)
       setSubmissions(response.data.submissions)
@@ -42,7 +44,7 @@ const StudentProfile = () => {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get(`/api/students/${id}/stats?period=${statsPeriod}`)
+      const response = await axios.get(`${API_BASE}/api/students/${id}/stats?period=${statsPeriod}`)
       setStats(response.data)
     } catch (error) {
       toast.error('Failed to fetch statistics')
