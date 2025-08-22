@@ -25,6 +25,8 @@ const StudentTable = () => {
 
   const [debouncedSearch, setDebouncedSearch] = useState('')
 
+  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedSearch(searchQuery)
@@ -48,7 +50,7 @@ const StudentTable = () => {
         sortOrder
       })
 
-      const response = await axios.get(`/api/students?${params}`)
+      const response = await axios.get(`${API_BASE}/api/students?${params}`)
       const data = response.data
 
       setStudents(data.students)
@@ -76,7 +78,7 @@ const StudentTable = () => {
     setModalOpen(true)
   }
 
-  const API_BASE = import.meta.env.VITE_API_URL || "http://localhost:5000";
+  
   const handleDeleteStudent = async (id) => {
     if (!window.confirm('Are you sure you want to delete this student?')) return
 
