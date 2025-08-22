@@ -13,8 +13,8 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
-  "http://localhost:3000",   // your React dev server
-  "https://codeforces-tracker-frontend-gedick3bj-himanshu01010s-projects.vercel.app"
+  "http://localhost:3000",
+  "https://codeforces-tracker-frontend.vercel.app"
 ];
 
 app.use(cors({
@@ -43,9 +43,26 @@ app.get('/',(req,res)=>{
 
 })
 
-mongoose.connect(process.env.MONGODB_URI)
-.then(()=> console.log('MongoDB is connected sucessfully'))
-.catch(err => console.error('MongoDB connection error:',err));
+const startServer = async () => {
+  try {
+    if (!process.env.MONGODB_URI) {
+      throw new Error('MONGODB_URI is not defined in environment variables.');
+    }
+    
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('MongoDB is connected successfully');
+    
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+
+  } catch (err) {
+    console.error('Failed to connect to MongoDB:', err);
+    process.exit(1); 
+  }
+};
+
+startServer(); 
 
 cron.schedule('0 2 * * *',async ()=>{
     console.log('starting daily codeforces data sync...');
